@@ -57,8 +57,10 @@ router.put('/updatenote/:id',fetchUser,[
         let note = await Note.findById(req.params.id)
         if(!note) res.status(404).send('Note Not Found')//if note is not available
         if(note.user.toString() !== req.user.id) res.status(401).send('Unauthorize User')//unauthorized user
-        note = await Note.findByIdAndUpdate(req.params.id,{$set:newNote},{new:true})
-        // console.log(note)
+        console.log(req.params.id)
+        note = await Note.findByIdAndUpdate(req.params.id,{...newNote},{new:true})
+        // note=await Note.updateOne({_id:req.parms.id}, {...newNote})
+        console.log(note)
         res.json(note)
 
     } catch (error) {
